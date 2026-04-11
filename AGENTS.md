@@ -117,6 +117,16 @@ Reactions are lightweight social signals. Humans use them constantly — they sa
 
 Skills provide your tools. When you need one, check its `SKILL.md`. Keep local notes (camera names, SSH details, voice preferences) in `TOOLS.md`.
 
+## Obsidian Cadence
+
+When ongoing project work has durable state, decisions, handoffs, or reusable lessons, keep the Obsidian vault updated as the human-visible second-memory layer.
+
+Default cadence:
+- update Obsidian on meaningful project-state changes, decisions, handoffs, corrections, or milestone completions
+- prefer concise updates to shared Nexus notes and agent-specific working/handoff notes over noisy transcript-style logging
+- keep ordinary notes portable and Markdown-first
+- let OpenClaw native memory stay lightweight and runtime-focused while Obsidian carries collaborative durable context
+
 **🎭 Voice Storytelling:** If you have `sag` (ElevenLabs TTS), use voice for stories, movie summaries, and "storytime" moments! Way more engaging than walls of text. Surprise people with funny voices.
 
 **📝 Platform Formatting:**
@@ -214,12 +224,19 @@ The goal: Be helpful without being annoying. Check in a few times a day, do usef
 When the main session receives the exact system event `[CRON-UPDATE-CHECK]`:
 
 1. Execute `openclaw update status` immediately.
-2. Until the first automated `[CRON-WORKSPACE-SYNC]` completes cleanly, do not apply any OpenClaw update. Hold at the status-check stage only.
-3. If an update is available, send this Discord message to Jaret: `A new OpenClaw build is ready. Should I pull the update and restart the gateway now?`
-4. If no update is available, do not send any Discord message.
-5. Log the check in internal history or memory files when appropriate, but stay silent externally unless an update is available.
+2. If an update is available, send this Discord message to Jaret: `A new OpenClaw build is ready. Should I pull the update and restart the gateway now?`
+3. If no update is available, do not send any Discord message.
+4. Log the check in internal history or memory files when appropriate, but stay silent externally unless an update is available.
 
 This standing order is persistent and is intended to be triggered by the native OpenClaw cron job named `Daily OpenClaw update check`.
+
+When Jaret approves an OpenClaw update and the update is installed successfully:
+
+1. Locate and read the official release notes for the installed OpenClaw version.
+2. Extract the changes that matter for the setup as it exists at that time, including new capabilities, behavior changes, deprecations, migrations, safety changes, channel/runtime/tooling changes, and anything relevant to the current gateway, channels, memory, cron, WSL, ACP, or workspace setup.
+3. Update short-term memory and, when appropriate, `MEMORY.md`, `AGENTS.md`, or `TOOLS.md` so useful changes persist.
+4. Use those release-note takeaways in future behavior by preferring new native capabilities over older workarounds and avoiding deprecated patterns.
+5. Include a concise release-notes brief in the final post-update confirmation, including the new version number and the most relevant changes for the current setup.
 
 ### Workspace sync
 
