@@ -13,6 +13,15 @@ Things like:
 - Device nicknames
 - Anything environment-specific
 
+## Current Local Notes
+
+### Obsidian
+
+- Second Brain vault (Windows): `G:\My Drive\Obsidian Vaults\Second Brain`
+- Second Brain vault (WSL): `/mnt/g/My Drive/Obsidian Vaults/Second Brain`
+- Global backlog note: `/mnt/g/My Drive/Obsidian Vaults/Second Brain/40 Agent Nexus/Backlog.md`
+- Global Kanban note: `/mnt/g/My Drive/Obsidian Vaults/Second Brain/40 Agent Nexus/Kanban.md`
+
 ## Examples
 
 ```markdown
