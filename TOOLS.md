@@ -22,6 +22,14 @@ Things like:
 - Global backlog note: `/mnt/g/My Drive/Obsidian Vaults/Second Brain/40 Agent Nexus/Backlog.md`
 - Global Kanban note: `/mnt/g/My Drive/Obsidian Vaults/Second Brain/40 Agent Nexus/Kanban.md`
 
+### QMD
+
+- Default local note-search path: `QMD_LLAMA_GPU=off npx -y @tobilu/qmd ...`
+- Common checks: `QMD_LLAMA_GPU=off npx -y @tobilu/qmd status` and `QMD_LLAMA_GPU=off npx -y @tobilu/qmd query "..."`
+- Use QMD first for fuzzy semantic note retrieval across workspace and Obsidian notes
+- Prefer `memory_search` for OpenClaw runtime memory recall
+- Prefer grep/read for exact text or exact path lookups
+
 ## Examples
 
 ```markdown

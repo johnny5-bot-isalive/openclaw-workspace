@@ -1,0 +1,12 @@
+# Local-only workspace runtime state
+.env
+.openclaw/
+state/
+var/
+opencode/
+
+# Local package noise
+package-lock.json
+
+# Memory runtime scratch
+memory/.dreams/

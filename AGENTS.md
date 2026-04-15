@@ -28,10 +28,11 @@ Capture what matters. Decisions, context, things to remember. Skip the secrets u
 
 ### 🧠 MEMORY.md - Your Long-Term Memory
 
-- **ONLY load in main session** (direct chats with your human)
-- **DO NOT load in shared contexts** (Discord, group chats, sessions with other people)
+- **ONLY load in trusted main contexts**
+- Default rule: **DO NOT load in shared contexts** (Discord, group chats, sessions with other people)
 - This is for **security** — contains personal context that shouldn't leak to strangers
-- You can **read, edit, and update** MEMORY.md freely in main sessions
+- Trusted exceptions for this workspace: the private Discord space `1491545110478065724`, operated only by Jaret, is within the trusted boundary. In particular, `#mission-control` (`channel:1491545112562503924`) and the heartbeat channel (`channel:1493275133228351538`) may both be treated like main-session surfaces for reading and updating `MEMORY.md`, `AGENTS.md`, `TOOLS.md`, and other workspace operating files when the conversation is clearly with Jaret
+- Operational difference: `#mission-control` (`channel:1491545112562503924`) is the main discussion channel, while the heartbeat channel (`channel:1493275133228351538`) is primarily for heartbeat/progress traffic. This affects communication style, not trust level
 - Write significant events, thoughts, decisions, opinions, lessons learned
 - This is your curated memory — the distilled essence, not raw logs
 - Over time, review your daily files and update MEMORY.md with what's worth keeping
@@ -125,7 +126,9 @@ Default cadence:
 - update Obsidian on meaningful project-state changes, decisions, handoffs, corrections, or milestone completions
 - prefer concise updates to shared Nexus notes and agent-specific working/handoff notes over noisy transcript-style logging
 - keep ordinary notes portable and Markdown-first
+- whenever creating a new Obsidian note, append 2 to 4 of the most relevant inline tags at the end of the file in the format `#tag`
 - let OpenClaw native memory stay lightweight and runtime-focused while Obsidian carries collaborative durable context
+- when waiting on Jaret for approval, action, or a decision, place a note in `00 Inbox` so the request is visible in the human action queue
 
 **🎭 Voice Storytelling:** If you have `sag` (ElevenLabs TTS), use voice for stories, movie summaries, and "storytime" moments! Way more engaging than walls of text. Surprise people with funny voices.
 
@@ -202,20 +205,24 @@ You are free to edit `HEARTBEAT.md` with a short checklist or reminders. Keep it
 - Check on projects (git status, etc.)
 - Update documentation
 - Commit and push your own changes
-- **Review and update MEMORY.md** (see below)
+- Review and update `MEMORY.md` **only from trusted main contexts** (see below)
 
 ### 🔄 Memory Maintenance (During Heartbeats)
 
-Periodically (every few days), use a heartbeat to:
+Periodically (every few days), use a heartbeat to review recent `memory/YYYY-MM-DD.md` files and identify significant events, lessons, or insights worth keeping long-term.
 
-1. Read through recent `memory/YYYY-MM-DD.md` files
-2. Identify significant events, lessons, or insights worth keeping long-term
-3. Update `MEMORY.md` with distilled learnings
-4. Remove outdated info from MEMORY.md that's no longer relevant
+- If the heartbeat is running in a **trusted main context**, it may also update `MEMORY.md` with distilled learnings and remove outdated info.
+- If the heartbeat is running in a **non-trusted context**, it should not read or edit `MEMORY.md`; instead it may capture candidates in daily memory or defer curation until a trusted context.
 
-Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; MEMORY.md is curated wisdom.
+Think of it like a human reviewing their journal and updating their mental model. Daily files are raw notes; `MEMORY.md` is curated wisdom, but only trusted contexts should touch it.
 
 The goal: Be helpful without being annoying. Check in a few times a day, do useful background work, but respect quiet time.
+
+### Heartbeat recovery rule
+
+If a heartbeat spawns a helper like Max or dispatches a project session and the completion handoff does not arrive by the next heartbeat, treat that as a stale handoff immediately.
+Do not keep reporting that you are still waiting.
+Instead, do an on-demand status check and then either restart the run, continue locally if appropriate, or surface a concrete blocker.
 
 ## System Maintenance
 
@@ -238,17 +245,62 @@ When Jaret approves an OpenClaw update and the update is installed successfully:
 4. Use those release-note takeaways in future behavior by preferring new native capabilities over older workarounds and avoiding deprecated patterns.
 5. Include a concise release-notes brief in the final post-update confirmation, including the new version number and the most relevant changes for the current setup.
 
+## Weekly MEMORY Hygiene — `[CRON-MEMORY-HYGIENE]`
+
+When the main session receives the exact system event `[CRON-MEMORY-HYGIENE]`:
+
+1. Review recent `memory/YYYY-MM-DD.md` files, prioritizing the last 7 days and extending slightly further back only if needed for continuity.
+2. Treat this as a trusted-context `MEMORY.md` hygiene pass, not a transcript summary.
+3. Promote into `MEMORY.md` only items that are clearly durable, reusable, and likely to matter beyond the current day or session, such as:
+   - stable preferences
+   - reusable environment or setup facts
+   - recurring workflow rules
+   - durable lessons learned
+   - decisions that materially changed future work
+4. Do not promote transient status notes, resolved one-off troubleshooting details, routine chronology, or speculative ideas that have not proven durable.
+5. Prune or tighten `MEMORY.md` only when an entry is clearly duplicated, superseded, no longer true, or too vague to remain useful.
+6. If uncertain, prefer keeping the existing `MEMORY.md` entry and capture ambiguity in daily memory or a working note instead of pruning aggressively.
+7. Update short-term memory or Obsidian notes only when that materially helps preserve context around the change.
+8. Stay silent unless a blocker appears or the pass made a meaningful durable-memory change worth surfacing briefly.
+
+This standing order is persistent and is intended to be triggered by the native OpenClaw cron job named `Weekly MEMORY hygiene review`, scheduled for Sundays at 9:30 AM America/Los_Angeles.
+
 ### Workspace sync
 
 When the main session receives the exact system event `[CRON-WORKSPACE-SYNC]`:
 
-1. Bundle all markdown changes in the workspace.
-2. Commit them with an AI-generated summary.
-3. Push the result to `origin`.
-4. Send a Discord notification only if the sync fails or if merge conflicts occur.
-5. If the sync succeeds cleanly, stay silent on Discord.
+1. Treat pushing the current workspace state to `origin` as the primary goal.
+2. From `/home/jaret/repos/openclaw-workspace`, inspect the repo before acting and include untracked markdown/docs files plus tracked docs deletions, not just already-tracked modifications.
+3. Stage the eligible workspace docs state, commit it with an AI-generated summary, and push the result to `origin` in the same turn.
+4. If there is nothing eligible to sync, stay silent.
+5. Send a Discord notification only if the sync fails or if merge conflicts occur.
+6. If the sync succeeds cleanly, stay silent on Discord.
 
-This standing order is persistent and is intended to be triggered by the native OpenClaw cron job named `[CRON-WORKSPACE-SYNC]`, scheduled for 3:00 AM America/Los_Angeles.
+This standing order is persistent and is intended to be triggered by the native OpenClaw cron job named `[CRON-WORKSPACE-SYNC]`, scheduled for 5:00 AM America/Los_Angeles.
+
+## Daily Retrospective — `[CRON-DAILY-RETRO]`
+
+When the main session receives the exact system event `[CRON-DAILY-RETRO]`:
+
+1. Determine the retrospective date (yesterday, America/Los_Angeles timezone).
+2. Treat `memory/YYYY-MM-DD.md` as internal execution memory, not the human-facing retrospective. Do not copy or paraphrase it wholesale into the daily log.
+3. Read the global Kanban as the primary operational source.
+4. Scan all Discord channel sessions from the last 24 hours as secondary context.
+5. Read the existing daily log for the retrospective date if it exists.
+6. Read relevant shared and agent working notes only when they add missing context, clarify a decision, or explain why work moved the way it did.
+7. Write a completed daily log entry to `70 History/Daily Logs/YYYY-MM-DD.md` as a curated human-facing closeout, not a raw transcript. Use these sections:
+   - **Summary** — what happened today overall
+   - **Completed** — cards moved to done from the Kanban
+   - **Lessons learned** — only durable lessons that should be visible in the second-brain layer
+   - **Decisions made** — decisions that materially changed future work
+   - **New backlog items** — only create when a durable, actionable follow-up is genuinely warranted; otherwise leave blank
+   - **Still active / carry forward** — work that is in progress but not yet complete
+8. Keep the daily log concise. Prefer synthesis over chronology, and omit low-value details already captured in local memory files, chat transcripts, or ordinary working notes.
+9. For each completed Kanban card, copy it to `99 Archive/Kanban Archive/YYYY-MM.md` (monthly archive), retaining card id, title, owner, completed date, result, and source project. Remove completed cards from the live Kanban.
+10. Keep active `Ready`, `Doing`, and `Blocked` cards on the live Kanban.
+11. Silent by default on Discord unless: the retrospective fails outright, a major blocker surfaces, or a significant new follow-up backlog item was created.
+
+This standing order is persistent and is triggered by the native OpenClaw cron job named `[CRON-DAILY-RETRO]`, scheduled for 00:10 America/Los_Angeles daily.
 
 ## Make It Yours
 

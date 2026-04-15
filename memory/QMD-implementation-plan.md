@@ -2,7 +2,7 @@
 
 Date: 2026-04-11
 Owner: Johnny 5
-Status: proposed
+Status: adopted for local pilot use
 
 ## Goal
 
@@ -50,10 +50,10 @@ Recommended source-of-truth split:
 
 ## Recommendation
 
-Adopt QMD in phases.
+Adopt QMD for local pilot use now.
 
 Do not wire it deeply into everything yet.
-Start with a small proof of value on the memory-project corpus, evaluate search quality and operational cost, then decide whether to expose it through MCP for agents.
+The pilot succeeded well enough to justify CLI-first usage on this machine, but MCP/server integration should wait until the operating model is more settled and the retrieval patterns are better documented.
 
 ## Risks and constraints
 
@@ -148,51 +148,51 @@ If QMD proves useful, use it to support the active obligations layer by ensuring
 
 Important: QMD should help retrieve obligations, not become the place where obligations are authored.
 
-## Initial recommended commands
+## Current operating model
 
-Current environment check:
-- `@tobilu/qmd` is not installed yet
-- Node: `v25.9.0`
-- npm: `11.12.1`
-- pnpm: `10.33.0`
-- package metadata confirms CLI binary `qmd` is provided by `@tobilu/qmd` version `2.1.0`
+Pilot result summary:
+- QMD is working well enough to adopt as a local retrieval layer for the memory project.
+- The pilot corpus was installed and configured successfully with collections for `workspace-memory`, `agent-nexus`, `openclaw-space`, and `daily-logs`.
+- File indexing, context attachment, embeddings, lexical search, and hybrid query all worked.
+- CPU-only mode is required on this machine to avoid a Vulkan build/runtime path.
+- Query expansion can drift on smaller corpora, so QMD should be used with deliberate query patterns rather than treated as a magical default.
 
-Concrete next commands:
+Recommended operating model:
+- Use QMD as a local CLI-first retrieval tool.
+- Keep QMD out of the source-of-truth role.
+- Prefer CPU-only execution by default on this machine.
+- Delay MCP exposure until normal CLI usage patterns are stable and documented.
+
+Recommended usage split:
+- Use `memory_search` for native OpenClaw memory and prior-work recall.
+- Use `grep`/`find`/direct reads for exact path, filename, or literal-text lookups.
+- Use QMD when the question is fuzzy, cross-note, semantic, or spans both workspace and Obsidian memory surfaces.
+
+Recommended local command pattern:
 
 ```bash
-npm install -g @tobilu/qmd
-qmd --help
+QMD_LLAMA_GPU=off npx -y @tobilu/qmd --help
+QMD_LLAMA_GPU=off npx -y @tobilu/qmd status
+QMD_LLAMA_GPU=off npx -y @tobilu/qmd query "active obligations layer"
 ```
 
-Then, if install succeeds, create pilot collections for the defined corpus with collection-specific masks/paths rather than one broad vault import.
-
-Draft collection flow:
-
-```bash
-qmd collection add /home/jaret/repos/openclaw-workspace/memory --name workspace-memory --mask "**/*.md"
-qmd collection add "/mnt/g/My Drive/Obsidian Vaults/Second Brain/40 Agent Nexus" --name agent-nexus --mask "**/*.md"
-qmd collection add "/mnt/g/My Drive/Obsidian Vaults/Second Brain/10 Spaces/OpenClaw" --name openclaw-space --mask "**/*.md"
-qmd collection add "/mnt/g/My Drive/Obsidian Vaults/Second Brain/70 History/Daily Logs" --name daily-logs --mask "**/*.md"
-```
-
-If QMD requires explicit single-file support for `MEMORY.md`, either:
-- add a small workspace-root collection with a narrower mask, or
-- duplicate that one file into a pilot notes subset only if the CLI cannot address it directly.
+If collection maintenance is needed later, keep using the same CPU-only prefix.
 
 ## Decision summary
 
-Best current move:
-- do a focused proof of concept
+Current decision:
+- adopt QMD as local retrieval infrastructure for this memory project setup
+- keep it CLI-first and CPU-only by default on this machine
 - keep QMD as retrieval infrastructure, not memory authority
-- only add MCP/server integration after we verify local value
+- defer MCP/server integration until its niche and workflow ergonomics are clearer
 
 ## Open questions
 
-1. Should the first workspace collection include only `memory/**` plus `MEMORY.md`, or also root operating notes like `AGENTS.md` and `HEARTBEAT.md`?
-2. Should the first pilot stay limited to memory-project material, or include selected OpenClaw reference notes from `20 Library/OpenClaw Reference/**`?
-3. Do we want QMD primarily for local CLI use, MCP use, or both?
-4. How much background indexing/maintenance is acceptable?
+1. Should the workspace side expand beyond `memory/**` plus `MEMORY.md` to include selected root operating notes like `AGENTS.md` and `HEARTBEAT.md`?
+2. Should the corpus expand to selected OpenClaw reference notes from `20 Library/OpenClaw Reference/**`, or stay tight for signal quality?
+3. What reindex cadence is acceptable in practice: manual only, on-demand, or periodic?
+4. At what point would MCP exposure add enough value to justify the extra integration surface?
 
 ## Recommended next action
 
-Next concrete step: create the QMD pilot collections from the confirmed workspace/vault corpus, then install and test QMD against real project queries.
+Next concrete step: document the QMD operating model in the shared/Johnny working notes so the vault and workspace memory surfaces stay aligned with the successful pilot outcome.
