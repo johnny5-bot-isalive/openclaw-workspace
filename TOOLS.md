@@ -15,6 +15,11 @@ Things like:
 
 ## Current Local Notes
 
+### OpenClaw CLI
+
+- Use `openclaw --version` to check the installed/current OpenClaw version.
+- Do not use bare `openclaw version` for version checks on this install; it currently hangs.
+
 ### Obsidian
 
 - The Nexus vault (Windows): `C:\Users\Jaret\Obsidian\The Nexus`

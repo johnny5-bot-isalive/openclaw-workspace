@@ -6,9 +6,9 @@ Load this file only when the current task is a matching system event or operatio
 
 When the main session receives the exact system event `[CRON-UPDATE-CHECK]`:
 
-1. Execute `openclaw update status` immediately.
+1. Execute `openclaw update status` and `openclaw --version` immediately. Do **not** use bare `openclaw version` for the current version; on this install it hangs.
 2. If no update is available, do not send any Discord message.
-3. If an update is available, identify the target version and read the official release notes for that version before asking for approval.
+3. If an update is available, identify both the installed/current version from `openclaw --version` and the target version from update status, then read the official release notes for that target version before asking for approval.
 4. Extract the changes that matter for the current setup, especially new capabilities, behavior changes, deprecations, migrations, safety changes, and anything relevant to the current gateway, channels, memory, cron, WSL, ACP, or workspace setup.
 5. Write or update a concise durable pre-update review note at `/mnt/c/Users/Jaret/Obsidian/The Nexus/00 Inbox/OpenClaw Update Review.md` with the target version, setup-relevant takeaways, and any workspace/config follow-ups that should happen immediately after the update.
 6. If an update is available, send a short approval prompt that mentions the target version and says the release-note review is already captured in the inbox note.
