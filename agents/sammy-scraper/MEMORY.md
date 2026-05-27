@@ -16,4 +16,4 @@ Durable research-specific memory. Keep this file lean: do not store project-spec
 
 ## Project rule pointers
 
-- Emily Job Search standing rules live in `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Rules.md`. Read that note for current search, digest, delivery, wording, and QA rules; do not rely on older promoted-memory fragments for this project.
+- Emily Job Search standing rules live in `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Rules.md`. Read that note for current search, digest, delivery, wording, and QA rules; do not rely on older promoted-memory fragments for this project. Current durable rule: routine Emily-facing digest/report emails do **not** need per-send approval after refresh, render, and attachment QA pass; send to Emily with Jaret CC'd unless a blocker/QA/freshness/transport/judgment exception exists.

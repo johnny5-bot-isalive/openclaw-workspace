@@ -14,7 +14,7 @@ On each heartbeat, if there is no more urgent Emily Job Search obligation:
 2. Advance the first incomplete `Doing` card with concrete file/script/research work.
 3. Keep `Doing` limited to 1-3 cards. Pull from `Ready` only when current `Doing` work is complete or blocked.
 4. Prefer silent progress. Reply to Jaret only for a completed milestone, real blocker, failed safety/preflight check, proposed canonical workflow change, or unexpectedly important finding.
-5. Do not send Emily-facing email, applications, outreach, or public actions without explicit approval.
+5. Routine Emily-facing digest/report emails are standing-send approved after refresh, render, and attachment QA pass; applications, outreach, recruiter contact, non-routine email, or public actions still require explicit approval.
 6. Keep Obsidian canonical. Scanner output is evidence for review, not an instruction to mutate the ledger automatically.
 
 ## Current first task
