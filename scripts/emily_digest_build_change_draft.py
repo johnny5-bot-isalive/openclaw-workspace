@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 from typing import Any
@@ -61,8 +62,16 @@ def yes_no(value: bool) -> str:
 
 
 def rel_link(path: Path, base_dir: Path) -> str:
-    rel = path.relative_to(base_dir).as_posix()
+    rel = os.path.relpath(path, base_dir).replace(os.sep, "/")
     return quote(rel, safe='/-_.')
+
+
+def infer_project_dir(source_path: Path) -> Path:
+    """Find the Emily Job Search project root from a dated artifact path."""
+    for candidate in [source_path.parent, *source_path.parents]:
+        if (candidate / "Live Role Shortlist.md").exists() and (candidate / "Role State Ledger.md").exists():
+            return candidate
+    return source_path.parent
 
 
 def find_previous(current_path: Path) -> Path:
@@ -147,7 +156,7 @@ def build_digest_impact(diff: dict[str, Any], change_bullets: dict[str, list[str
     return " ".join(parts)
 
 
-def build_markdown(current_path: Path, previous_path: Path, current: dict[str, Any], previous: dict[str, Any], pass_type: str) -> str:
+def build_markdown(current_path: Path, previous_path: Path, current: dict[str, Any], previous: dict[str, Any], pass_type: str, link_base_dir: Path) -> str:
     current_roles = current.get("roles") or []
     previous_roles = previous.get("roles") or []
     if not isinstance(current_roles, list) or not isinstance(previous_roles, list):
@@ -162,9 +171,8 @@ def build_markdown(current_path: Path, previous_path: Path, current: dict[str, A
     if not current_date:
         raise ChangeDraftError("Current render data is missing digest_date.")
 
-    base_dir = current_path.parent
-    current_link = rel_link(current_path, base_dir)
-    previous_link = rel_link(previous_path, base_dir) if previous_path.parent == base_dir else str(previous_path)
+    current_link = rel_link(current_path, link_base_dir)
+    previous_link = rel_link(previous_path, link_base_dir)
 
     lines = [
         "---",
@@ -232,8 +240,10 @@ def main() -> int:
     try:
         current = load_yaml(current_path)
         previous = load_yaml(previous_path)
-        output_path = Path(args.output).resolve() if args.output else (current_path.parent / f"Emily Digest Change Draft - {current.get('digest_date', 'unknown')}.md").resolve()
-        markdown = build_markdown(current_path, previous_path, current, previous, args.pass_type)
+        project_dir = infer_project_dir(current_path)
+        output_path = Path(args.output).resolve() if args.output else (project_dir / "Digest Change Drafts" / f"Emily Digest Change Draft - {current.get('digest_date', 'unknown')}.md").resolve()
+        markdown = build_markdown(current_path, previous_path, current, previous, args.pass_type, output_path.parent)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(markdown, encoding="utf-8")
         print(f"Wrote change draft: {output_path}")
         return 0

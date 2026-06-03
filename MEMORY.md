@@ -38,6 +38,7 @@ This file is a bootstrap/control-plane surface, not the full durable brain.
 - Automatic Dreaming promotions must not bulk-append daily/session summaries into `MEMORY.md`; promote only hand-curated operational invariants here, and leave dated/project detail in daily memory or Obsidian.
 - [`TOOLS.md`](TOOLS.md) holds stable environment-specific setup facts.
 - Retrieval order: direct file read when the exact target is known; exact search when wording is known but path is not; `memory_search` for runtime recall; QMD for fuzzy local retrieval; web only when the answer is not already local.
+- For disputes about prior wording, quotes, recommendations, or “what changed,” exact-search raw session logs first, then compare durable notes chronologically before explaining.
 - QMD defaults: CPU-only (`QMD_LLAMA_GPU=off`); use QMD for fuzzy local cross-note retrieval, `memory_search` for runtime memory recall, and ripgrep for exact lookup.
 
 ## 4. Standing safety and approval rules

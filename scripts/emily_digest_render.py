@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import base64
 import html
+import math
 import re
 import sys
 from pathlib import Path
@@ -27,12 +28,37 @@ REQUIRED_TOP_LEVEL = [
 ]
 
 RUBRIC_ORDER = [
-    ("scope_seniority", "Scope / seniority", 30),
+    ("scope_seniority", "Scope / seniority", 20),
     ("role_fit", "Role fit", 25),
     ("compensation", "Compensation", 15),
     ("geography_work_model", "Geography / work model", 15),
     ("travel_fit", "Travel fit", 5),
-    ("resume_fit", "Resume fit", 10),
+    ("resume_fit", "Resume / attainability", 20),
+]
+
+AUDIENCE_COPY_BANNED_PHRASES = [
+    "still resolves",
+    "still resolved",
+    "resolves today",
+    "direct posting",
+    "direct page",
+    "direct careers page",
+    "direct greenhouse",
+    "direct lever",
+    "direct source",
+    "freshness",
+    "recalibrat",
+    "validation",
+    "validated",
+    "live enough",
+    "post still",
+    "posting still",
+    "still live",
+    "current live set",
+    "live monitored set",
+    "survivor",
+    "pattern-audit",
+    "in-lane survivor",
 ]
 
 SECTION_RE = re.compile(r"^##\s+(.+?)\s*$", re.MULTILINE)
@@ -75,6 +101,17 @@ def require(value: Any, label: str) -> Any:
     return value
 
 
+def validate_audience_copy(text: str, label: str) -> None:
+    """Reject source-validation/process wording in Emily-facing copy fields."""
+    lowered = text.lower()
+    hits = [phrase for phrase in AUDIENCE_COPY_BANNED_PHRASES if phrase in lowered]
+    if hits:
+        raise ValidationError(
+            f"{label} contains internal process/source-validation wording that should not appear in Emily-facing copy: "
+            + ", ".join(sorted(set(hits)))
+        )
+
+
 def resolve_path(base_dir: Path, raw: str | None) -> Path | None:
     if not raw:
         return None
@@ -82,6 +119,14 @@ def resolve_path(base_dir: Path, raw: str | None) -> Path | None:
     if path.is_absolute():
         return path
     return (base_dir / path).resolve()
+
+
+def infer_project_dir(source_path: Path) -> Path:
+    """Find the Emily Job Search project root from a dated artifact path."""
+    for candidate in [source_path.parent, *source_path.parents]:
+        if (candidate / "Live Role Shortlist.md").exists() and (candidate / "Role State Ledger.md").exists():
+            return candidate
+    return source_path.parent
 
 
 def extract_section(markdown: str, heading: str) -> str | None:
@@ -143,7 +188,7 @@ def strip_frontmatter(markdown: str) -> str:
 def inline_local_images(rendered_html: str, base_dir: Path) -> str:
     def replace(match: re.Match[str]) -> str:
         raw_src = html.unescape(match.group(1))
-        alt = html.escape(match.group(2))
+        alt = html.escape(html.unescape(match.group(2)))
         if raw_src.startswith(("http://", "https://", "data:")):
             return (
                 f'<figure style="margin:18px 0;text-align:center;"><img src="{html.escape(raw_src, quote=True)}" '
@@ -153,7 +198,7 @@ def inline_local_images(rendered_html: str, base_dir: Path) -> str:
 
         resolved = (base_dir / unquote(raw_src)).resolve()
         if not resolved.exists():
-            return f'<p style="color:#b91c1c;"><strong>Missing local asset:</strong> {html.escape(raw_src)}</p>'
+            raise ValidationError(f"Missing local image asset referenced by markdown: {resolved}")
         if resolved.suffix.lower() == ".svg":
             svg = resolved.read_text(encoding="utf-8")
             if "<svg" in svg:
@@ -185,6 +230,79 @@ def inline_local_images(rendered_html: str, base_dir: Path) -> str:
         return f'<p><a href="{html.escape(raw_src, quote=True)}">{alt or html.escape(raw_src)}</a></p>'
 
     return IMAGE_TAG_RE.sub(replace, rendered_html)
+
+
+def generate_radar_svg(role: dict[str, Any], digest_date: str) -> str:
+    labels = [
+        ("scope_seniority", "Scope"),
+        ("role_fit", "Role fit"),
+        ("compensation", "Comp"),
+        ("geography_work_model", "Geo"),
+        ("travel_fit", "Travel"),
+        ("resume_fit", "Resume"),
+    ]
+    center_x = 220
+    center_y = 240
+    max_r = 135.3
+    angles = [-math.pi / 2 + i * (2 * math.pi / 6) for i in range(6)]
+
+    def point(angle: float, radius: float) -> tuple[float, float]:
+        return (center_x + radius * math.cos(angle), center_y + radius * math.sin(angle))
+
+    def pts_str(points: list[tuple[float, float]]) -> str:
+        return " ".join(f"{x:.1f},{y:.1f}" for x, y in points)
+
+    parts = [
+        '<svg xmlns="http://www.w3.org/2000/svg" width="440" height="440" viewBox="0 0 440 440">',
+        '  <rect width="100%" height="100%" fill="white" />',
+        f'  <text x="220" y="26" text-anchor="middle" font-size="18" font-weight="600" fill="#24292f">{html.escape(str(role["company"]))} radar</text>',
+        f'  <text x="220" y="46" text-anchor="middle" font-size="12" fill="#57606a">Emily digest score profile • total {role["total_score"]}/100 • {html.escape(str(digest_date))}</text>',
+    ]
+
+    for level in range(1, 6):
+        radius = max_r * level / 5
+        parts.append(
+            f'  <polygon points="{pts_str([point(angle, radius) for angle in angles])}" fill="none" stroke="#d0d7de" stroke-width="1" />'
+        )
+
+    for angle in angles:
+        x, y = point(angle, max_r)
+        parts.append(f'  <line x1="{center_x}" y1="{center_y}" x2="{x:.1f}" y2="{y:.1f}" stroke="#d0d7de" stroke-width="1" />')
+
+    label_positions = [
+        (220.0, 92.7, "middle"),
+        (364.2, 176.3, "start"),
+        (364.2, 343.6, "start"),
+        (220.0, 427.3, "middle"),
+        (75.8, 343.7, "end"),
+        (75.8, 176.3, "end"),
+    ]
+    for (_, label), (x, y, anchor) in zip(labels, label_positions):
+        parts.append(f'  <text x="{x}" y="{y}" font-size="13" text-anchor="{anchor}" fill="#24292f">{html.escape(label)}</text>')
+
+    role_points = []
+    for (key, _), angle in zip(labels, angles):
+        entry = role["rubric"][key]
+        role_points.append(point(angle, max_r * (entry["score"] / entry["max"])))
+    parts.append(f'  <polygon points="{pts_str(role_points)}" fill="#54aeff55" stroke="#0969da" stroke-width="2" />')
+    for x, y in role_points:
+        parts.append(f'  <circle cx="{x:.1f}" cy="{y:.1f}" r="3.2" fill="#0969da" />')
+    parts.append("</svg>")
+    return "\n".join(parts) + "\n"
+
+
+def ensure_radar_assets(data: dict[str, Any], base_dir: Path) -> None:
+    """Create/refresh radar SVGs declared by the render-data sidecar before HTML rendering."""
+    digest_date = str(data["digest_date"])
+    for role in data.get("roles", []):
+        raw_asset = role.get("radar_asset")
+        if not raw_asset:
+            continue
+        asset_path = Path(unquote(str(raw_asset)))
+        if not asset_path.is_absolute():
+            asset_path = (base_dir / asset_path).resolve()
+        ensure_parent(asset_path)
+        asset_path.write_text(generate_radar_svg(role, digest_date), encoding="utf-8")
 
 
 def style_anchor_tags(rendered_html: str) -> str:
@@ -252,8 +370,12 @@ def validate_bundle(data: dict[str, Any], base_dir: Path) -> dict[str, Path | No
         seen_ranks.add(rank)
         for key in ["company", "title", "canonical_url", "quick_read", "key_highlights", "key_risk", "total_score", "rubric"]:
             require(role.get(key), f"roles[{idx}].{key}")
+        validate_audience_copy(str(role["quick_read"]), f"roles[{idx}].quick_read")
+        validate_audience_copy(str(role["key_risk"]), f"roles[{idx}].key_risk")
         if not isinstance(role["key_highlights"], list) or len(role["key_highlights"]) < 1:
             raise ValidationError(f"roles[{idx}].key_highlights must contain at least one item")
+        for highlight_idx, highlight in enumerate(role["key_highlights"], start=1):
+            validate_audience_copy(str(highlight), f"roles[{idx}].key_highlights[{highlight_idx}]")
         rubric = role["rubric"]
         if not isinstance(rubric, dict):
             raise ValidationError(f"roles[{idx}].rubric must be an object")
@@ -287,10 +409,14 @@ def validate_bundle(data: dict[str, Any], base_dir: Path) -> dict[str, Path | No
     for key in ["new", "moved_up", "removed_or_stale"]:
         if key not in data["changes"]:
             raise ValidationError(f"changes.{key} is required")
+        for item_idx, item in enumerate(data["changes"].get(key) or [], start=1):
+            validate_audience_copy(str(item), f"changes.{key}[{item_idx}]")
 
     quick_notes = require(data.get("quick_notes"), "quick_notes")
     if not isinstance(quick_notes, list) or not quick_notes:
         raise ValidationError("quick_notes must be a non-empty list")
+    for note_idx, note in enumerate(quick_notes, start=1):
+        validate_audience_copy(str(note), f"quick_notes[{note_idx}]")
 
     source_artifacts = require(data.get("source_artifacts"), "source_artifacts")
     output_artifacts = require(data.get("output_artifacts"), "output_artifacts")
@@ -436,7 +562,7 @@ def ensure_parent(path: Path) -> None:
 def main() -> int:
     args = parse_args()
     data_path = Path(args.data).resolve()
-    base_dir = Path(args.project_dir).resolve() if args.project_dir else data_path.parent
+    base_dir = Path(args.project_dir).resolve() if args.project_dir else infer_project_dir(data_path)
 
     try:
         data = load_yaml(data_path)
@@ -458,6 +584,7 @@ def main() -> int:
             )
 
         intro = metadata.get("intro") or "Hi Emily,\n\nHere’s your latest shortlist update."
+        validate_audience_copy(intro, "digest intro")
         text_output = render_text(data, intro)
         html_output = render_html(data, intro)
 
@@ -469,6 +596,7 @@ def main() -> int:
         comparison_md = paths.get("comparison_md")
         comparison_html = paths.get("comparison_html")
         if comparison_md and comparison_html:
+            ensure_radar_assets(data, base_dir)
             comp_body = comparison_md.read_text(encoding="utf-8")
             comp_html = f'''<!doctype html>
 <html lang="en">
