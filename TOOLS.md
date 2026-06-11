@@ -29,6 +29,12 @@ Things like:
 - Global Kanban note: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Kanban.md`
 - Editing rule: for Obsidian vault paths under `/mnt/c/Users/Jaret/Obsidian/The Nexus`, do **not** use `apply_patch`; that tool is sandbox-limited to the workspace and will fail on vault paths outside it. Prefer `write`, `edit`, or controlled `exec` instead.
 
+### DOCX
+
+- Preferred formatted DOCX route: local skill `skills/docx-builder` with `node skills/docx-builder/scripts/create_docx.mjs <input-spec.json> <output.docx>`.
+- Dependency is pinned in the workspace as `docx@9.7.1`; install/restore with `npm install --ignore-scripts` from `/home/jaret/repos/openclaw-workspace`.
+- Packaged skill artifact: `skills/dist/docx-builder.skill`.
+
 ### QMD
 
 - `qmd` is installed globally at `/home/jaret/.npm-global/bin/qmd`
