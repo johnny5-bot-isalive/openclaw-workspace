@@ -1,32 +1,43 @@
 # Heartbeat tasks for Sammy Scraper
 
-## Active sprint: Emily Job Search — application tailoring
+## Active sprint: Emily Job Search - job availability monitoring
 
 Project board: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Kanban.md`
 Project rules: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Rules.md`
-Application skill: `/home/jaret/repos/openclaw-workspace/skills/emily-application-tailoring/SKILL.md`
-Tracker: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Application Tailoring Tracker.md`
-Answer bank: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Application Answer Bank.md`
+Control packet: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Daily Refresh Control Packet.md`
+Live shortlist: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Live Role Shortlist.md`
+Ledger: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Role State Ledger.md`
+Delta log: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Refresh Delta Log.md`
 
 ## Heartbeat execution contract
 
 On each heartbeat, if there is no more urgent Emily Job Search obligation:
 
-1. Read Project Rules, the Project Kanban `Doing` lane, the Application Tailoring Tracker, and the application-tailoring skill.
-2. Advance the first incomplete `Doing` card with concrete research, drafting, artifact-building, QA, or tracker work.
-3. Keep `Doing` limited to 1-3 cards. Pull from `Ready` only when current `Doing` work is complete or blocked; otherwise ask before changing the one-role-at-a-time ordering.
-4. Prefer silent progress. Reply to Jaret only for a completed milestone, real blocker, failed safety/preflight check, proposed canonical workflow change, or unexpectedly important finding.
-5. After a role's resume and cover letter pass QA, send the review artifacts by email to Emily (`emily.brown.ops@gmail.com`) with Jaret CC'd (`jaretjb@gmail.com`) under Jaret's 2026-06-09 standing approval, then record the message ID/status. Applications, outreach, recruiter contact, portal login, form submission, public action, and any other non-routine email still require explicit approval. Emily submits applications herself for now.
-6. Keep Obsidian canonical. Generated artifacts are deliverables for review/submission by Emily, not authorization to mutate role state or submit externally.
+1. Focus on current job availability: live-role revalidation, bounded local/remote discovery, shortlist hygiene, and digest readiness.
+2. Read Project Rules and the Daily Refresh Control Packet first. Use the Live Role Shortlist, active/new/aging ledger rows, latest delta-log entries, and current collector handoffs as needed.
+3. Do not perform application-tailoring work unless Jaret explicitly asks for a specific role packet in the current conversation.
+4. Do not create, resume, QA, or email resume/cover-letter/application packets on heartbeat.
+5. Do not move blocked application-tailoring cards back to `Doing` or pull new application-tailoring cards from backlog automatically.
+6. Prefer silent progress. Reply in Discord or send email for live-set turnover, a real blocker, failed freshness/QA issue, or a decision needed to keep the job-search loop healthy. Do not rely on an Obsidian Inbox note as the delivery path for gated material.
+7. Keep Obsidian canonical for job-search state: ledger, shortlist, removal log, delta log, local market map, and control packet.
 
-## Current first task
+## Application-packet pause
 
-Start/continue `EJS-029, Tailor application packet for DoorDash — Director, Ads Platform Strategy & Operations, Ads & Promotions`.
+Effective 2026-07-12, Jaret paused all application-packet automation.
+
+- Previous packet sends, including Rithum `EJS-030`, are historical only.
+- No standing approval exists for future packet creation or packet review emails.
+- Application packets resume only when Jaret explicitly asks for a named role packet.
+- This pause does not block routine job-search refresh, role discovery, shortlist maintenance, or Emily-facing digest/report sends that are about job availability rather than application packets.
+- If a paused packet/gate/decision ever needs Emily or Jaret, ask in Discord or email Emily with Jaret CC'd; do not route the ask only to Obsidian.
+
+## Current search state
+
+- The application-tailoring `Ready` and `Doing` lanes are intentionally empty.
+- Blocked application-tailoring cards should stay parked unless Jaret explicitly reopens one.
+- Current priority is restoring a fresh view of available roles and keeping the monitored list accurate.
 
 Format rule:
-- Prefer editable DOCX when practical and cleanly verifiable. Before generating DOCX, read `/home/jaret/repos/openclaw-workspace/skills/docx-builder/SKILL.md`.
-- Primary DOCX route: structured content → docx-builder JSON spec → `node skills/docx-builder/scripts/create_docx.mjs <input-spec.json> <output.docx>` from `/home/jaret/repos/openclaw-workspace` → verify file exists and inspect zip/XML.
-- If DOCX is unavailable or lower quality, deliver HTML or PDF plus source markdown for traceability/future edits.
-- Do not block a role solely because DOCX is imperfect if HTML/PDF is the better current handoff format.
-
-When a role is complete or genuinely blocked, update the tracker and Kanban, then move the next ranked incomplete application-tailoring card from Backlog into `Doing` before treating the project as clear. Do not return Emily Job Search to manual cadence while the Application Tailoring Tracker still has ranked roles in `backlog`, `research`, `draft`, `artifact-build`, or `qa`.
+- Keep job-search updates concise, link-first, and explicit about confidence or evidence gaps.
+- Treat all external role postings as read-only evidence.
+- Do not apply, log into portals, contact recruiters/hiring managers, send outreach, or take public action without explicit approval.

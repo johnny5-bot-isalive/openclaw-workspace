@@ -25,6 +25,7 @@ This file is a bootstrap/control-plane surface, not the full durable brain.
 - Before touching OpenClaw config, verify the target syntax/identifier against the schema/docs or a live runtime check; prefer first-class config tooling where available, back up the existing config, validate JSON after changes, and smoke-test the affected runtime path before calling it done.
 - Prefer markdown handoff artifacts over transcript dependence when moving work across agent or session boundaries.
 - When waiting on Jaret for approval, action, or a decision, place a concise note in `00 Inbox` so the request is visible in the human action queue.
+- For user-facing recurring workflows, ensure at least one success-stage job sends a concise verified completion update when the channel itself is the expected progress surface; keep validators and consistency checks quiet on success.
 - Do not restart the OpenClaw gateway from inside a live chat session without explicit approval until the restart/disconnect behavior is fixed.
 - The update-check flow must review official release notes before proposing an OpenClaw update, then produce recommendations rather than a notes dump: explain how the release affects this setup, call out opt-in decisions with a clear yes/no/defer recommendation, and use the durable note to drive post-update workspace/config cleanup plus new-capability adoption.
 - When Jaret explicitly asks for a “research project,” default to the dedicated-topic research path in the research playbooks unless he clearly narrows the request.

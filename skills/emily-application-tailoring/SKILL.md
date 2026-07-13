@@ -22,8 +22,8 @@ Start in the Emily Job Search Obsidian project:
 - Master resume folder: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Resumes/`
 - Master resume note: `Resumes/Resume Master Draft.md` when present
 - Positioning guide: `Resumes/Resume and Cover Letter Positioning Guide.md`
-- Application answer bank: `Application Answer Bank.md`
-- Application tailoring tracker: `Application Tailoring Tracker.md`
+- Application answer bank: `Applications/Application Answer Bank.md`
+- Application tailoring tracker: `Applications/Application Tailoring Tracker.md`
 - Role ledger / evidence notes as needed for the role
 
 If multiple resume files exist, choose the best base for the role. Prefer the canonical markdown master for reasoning, then use DOCX/PDF variants only when formatting/final deliverable requirements matter.
@@ -42,7 +42,7 @@ Record:
 - rank/score if available
 - canonical posting URL
 - output folder path under `Resumes/<Company-or-Role>/`
-- current status in `Application Tailoring Tracker.md`: research, draft, artifact-build, QA, blocked, ready for Emily review, or sent to Emily/Jaret for review
+- current status in `Applications/Application Tailoring Tracker.md`: research, draft, artifact-build, QA, blocked, ready for Emily review, or sent to Emily/Jaret for review
 
 ### 2. Gather role intelligence
 
@@ -116,7 +116,7 @@ Produce review-ready markdown/source first, then final Emily-friendly artifacts.
 - concise cover letter specific to the company and role
 - optional application-question answers when the posting suggests likely prompts
 - short recruiter/application note if useful
-- reusable application-question answers or updates for `Application Answer Bank.md` when a prompt recurs
+- reusable application-question answers or updates for `Applications/Application Answer Bank.md` when a prompt recurs
 
 Keep the voice confident, specific, and plain-English. Avoid keyword stuffing and consultant jargon.
 
@@ -133,8 +133,8 @@ Run a final gate:
 - resume length choice is justified
 - cover letter names specific company/role reasons
 - resume and cover letter exist in Emily-friendly format (DOCX preferred; HTML/PDF acceptable when DOCX is not practical) and open/inspect cleanly enough for review
-- Application Tailoring Tracker is updated
-- Application Answer Bank is updated when reusable answers were drafted or improved
+- `Applications/Application Tailoring Tracker.md` is updated
+- `Applications/Application Answer Bank.md` is updated when reusable answers were drafted or improved
 - no application, outreach, portal login, recruiter contact, hiring-manager contact, or public action has occurred; approved review email to Emily/Jaret is allowed after QA
 - remaining questions/blockers are explicit
 
@@ -152,7 +152,7 @@ Output the final packet with:
 
 ## Durable tracking
 
-At the end of each role pass, update `Application Tailoring Tracker.md` with:
+At the end of each role pass, update `Applications/Application Tailoring Tracker.md` with:
 - status
 - output paths
 - resume length/version decision
