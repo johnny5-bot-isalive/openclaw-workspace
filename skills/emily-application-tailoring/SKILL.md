@@ -11,13 +11,14 @@ Use this skill for one role at a time. Do not batch multiple companies in one dr
 
 Maximize Emily's interview odds by making the application packet obviously relevant to the specific role while staying truthful, source-grounded, and human-reviewable.
 
-Never submit applications, message recruiters, contact hiring teams, or log into job portals without explicit approval. Emily is the submitter for now; produce materials she can review, tweak, and upload herself. Jaret approved routine per-role review emails on 2026-06-09: after a role's resume and cover letter pass QA, email the review artifacts to Emily at `emily.brown.ops@gmail.com` with Jaret CC'd at `jaretjb@gmail.com`. This approval is only for review/handoff email, not application submission or outreach.
+Never submit applications, message recruiters, contact hiring teams, or log into job portals without explicit approval. Emily is the submitter for now; produce materials she can review, tweak, and upload herself. The current project rule supersedes older 2026-06-09 standing review-email approval: do not create, resume, QA, or email a role-specific packet unless Jaret or Emily explicitly asks for the named role in the current conversation.
 
 ## Project sources
 
 Start in the Emily Job Search Obsidian project:
 
 - Project rules: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Rules.md`
+- Current named-role workflow: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Applications/Role-Specific Application Workflow.md`
 - Live ranked roles: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Live Role Shortlist.md`
 - Master resume folder: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Resumes/`
 - Master resume note: `Resumes/Resume Master Draft.md` when present
@@ -135,7 +136,7 @@ Run a final gate:
 - resume and cover letter exist in Emily-friendly format (DOCX preferred; HTML/PDF acceptable when DOCX is not practical) and open/inspect cleanly enough for review
 - `Applications/Application Tailoring Tracker.md` is updated
 - `Applications/Application Answer Bank.md` is updated when reusable answers were drafted or improved
-- no application, outreach, portal login, recruiter contact, hiring-manager contact, or public action has occurred; approved review email to Emily/Jaret is allowed after QA
+- no application, outreach, portal login, recruiter contact, hiring-manager contact, public action, or review email has occurred unless the current conversation explicitly requested the named-role packet and delivery
 - remaining questions/blockers are explicit
 
 Output the final packet with:
@@ -159,7 +160,7 @@ At the end of each role pass, update `Applications/Application Tailoring Tracker
 - cover-letter status
 - reusable answer-bank updates
 - remaining questions/blockers
-- review email status/message ID and whether Emily/Jaret review has happened
+- review/delivery status/message ID when applicable and whether Emily/Jaret review has happened
 
 Keep role-specific artifacts under `Resumes/<Company-or-Role>/` using stable filenames that include the company, role shorthand, and date.
 
@@ -172,4 +173,4 @@ Stop and ask Jaret when:
 - a claim would imply Director/Senior Director authority, tool depth, domain expertise, team ownership, or hiring-team connection that is not directly supported
 - a hiring-manager/team claim is uncertain but would affect strategy
 - no reliable Emily-friendly artifact can be produced or verified in DOCX, HTML, or PDF
-- external send/submission is requested outside the approved Emily/Jaret review-handoff email; Emily is submitting applications herself for now
+- external send/submission is requested beyond the named-role delivery explicitly authorized in the current conversation; Emily is submitting applications herself for now

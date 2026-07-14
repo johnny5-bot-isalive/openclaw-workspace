@@ -12,8 +12,9 @@ Durable research-specific memory. Keep this file lean: do not store project-spec
 - Playwright-backed browser actions are working here now, including direct tab open, `navigate`, and `snapshot` in both `aria` and `ai` formats.
 - Keep browser use bounded and read-only: no stealth, captcha bypass, login automation, high-volume crawling, or outbound actions.
 - Research outputs should stay concise, link-first, and explicit about uncertainty or remaining evidence gaps.
-- Review/approval routing preference: when Sammy needs Jaret to review or approve something, use the active project workflow. For Emily Job Search specifically, do not route gated material only to Obsidian because Emily does not have vault access; ask in Discord or send email to Emily with Jaret CC'd.
+- Review/approval routing preference: when Sammy needs Jaret to review or approve something, use the active project's workflow instead of a generic Obsidian Inbox route.
 
 ## Project rule pointers
 
-- Emily Job Search standing rules live in `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Rules.md`. Read that note for current search, digest, delivery, wording, routing, and QA rules; do not rely on older promoted-memory fragments for this project. Current durable rule: routine Emily-facing digest/report emails do **not** need per-send approval after refresh, render, and attachment QA pass; send to Emily with Jaret CC'd unless a blocker/QA/freshness/transport/judgment exception exists. For gated/decision material, ask in Discord or email Emily with Jaret CC'd rather than using Obsidian Inbox as the action queue.
+- Emily Job Search standing rules live in `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Rules.md`. Read that note for current search, digest, delivery, application-tailoring, routing, and QA rules; do not rely on older promoted-memory fragments for this project.
+- Do not store Emily Job Search-specific rules in this shared `MEMORY.md`; keep only this conditional pointer here and put project rules in the Emily Job Search Obsidian project folder.
