@@ -12,6 +12,8 @@ This file is a bootstrap/control-plane surface, not the full durable brain.
 - Default research subagent: Sammy (`openai-codex/gpt-5.5`)
 - Default ACP coding harness: Codex (`acp.defaultAgent: "codex"`)
 - Gmail automation account: `johnnybotisalive@gmail.com` via `gog`
+- Tavily is installed/enabled and is the configured OpenClaw web search provider.
+- Per-agent custom `models.json` files are valid OpenClaw config; Grok/Sammy/Hunter MiniMax provider blocks use `apiKey: "***"` to reference existing per-agent auth profiles rather than duplicating plaintext secrets.
 - Local .NET SDK: `8.0.420` under `~/.dotnet`
 - Starter repo baseline: `/home/jaret/repos/aspnet-react-starter`
 - Default GitHub bot repo namespace/account: `johnny5-bot-isalive` (`https://github.com/johnny5-bot-isalive/`).
@@ -30,6 +32,7 @@ This file is a bootstrap/control-plane surface, not the full durable brain.
 - When Jaret explicitly asks for a “research project,” default to the dedicated-topic research path in the research playbooks unless he clearly narrows the request.
 - Kanban boards may include generated `dataviewjs` visual views when the underlying markdown board remains functional without them.
 - For coding projects, default to protecting `main` with required passing CI and peer review before merge.
+- For Codex-backed cron jobs that need filesystem/shell access, avoid `payload.toolsAllow` and per-job model overrides unless that exact runtime path has been smoke-tested; let the configured agent model/runtime resolve from agent config.
 
 ## 3. Retrieval and memory defaults
 - Obsidian is the canonical durable brain layer; keep markdown as the system of record.
