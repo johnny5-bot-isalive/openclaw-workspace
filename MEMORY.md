@@ -7,13 +7,13 @@ This file is a bootstrap/control-plane surface, not the full durable brain.
 - OpenClaw runs here as a systemd-managed user service.
 - Primary workspace: `/home/jaret/repos/openclaw-workspace`
 - Primary Obsidian vault: Windows `C:\Users\Jaret\Obsidian\The Nexus`; WSL `/mnt/c/Users/Jaret/Obsidian/The Nexus`
-- Main default model: `openai-codex/gpt-5.5`
-- Default grunt-work subagent: Max (`MiniMax M2.7`)
-- Default research subagent: Sammy (`openai-codex/gpt-5.5`)
+- Main default model: `openai/gpt-5.6-sol`
+- Default grunt-work subagent: Max (`openai/gpt-5.6-luna`)
+- Default research subagent: Sammy (`openai/gpt-5.6-sol`)
 - Default ACP coding harness: Codex (`acp.defaultAgent: "codex"`)
 - Gmail automation account: `johnnybotisalive@gmail.com` via `gog`
 - Tavily is installed/enabled and is the configured OpenClaw web search provider.
-- Per-agent custom `models.json` files are valid OpenClaw config; Grok/Sammy/Hunter MiniMax provider blocks use `apiKey: "***"` to reference existing per-agent auth profiles rather than duplicating plaintext secrets.
+- Per-agent custom `models.json` files are valid OpenClaw config; MiniMax provider/auth/plugin entries were removed after the subscription ended, and Max now uses `openai/gpt-5.6-luna`.
 - Local .NET SDK: `8.0.420` under `~/.dotnet`
 - Starter repo baseline: `/home/jaret/repos/aspnet-react-starter`
 - Default GitHub bot repo namespace/account: `johnny5-bot-isalive` (`https://github.com/johnny5-bot-isalive/`).
