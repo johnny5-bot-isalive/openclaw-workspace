@@ -1,8 +1,8 @@
 # Heartbeat tasks for Sammy Scraper
 
-## Active sprint: EJS-035 — BDA second-interview presentation
+## Current state: EJS-035 — await BDA post-interview status
 
-Priority: **P0 through Wednesday, 2026-07-29**
+Priority: **Blocked pending Emily's next BDA update**
 
 Project board: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Kanban.md`
 Project rules: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily Job Search/Project Rules.md`
@@ -19,20 +19,15 @@ Delta log: `/mnt/c/Users/Jaret/Obsidian/The Nexus/40 Agent Nexus/Projects/Emily 
 
 On each heartbeat:
 
-1. Read Project Rules, the BDA role context, the BDA presentation context, and the BDA child backlog.
+1. Read Project Rules, the project board, the BDA role context, the BDA presentation context, and the BDA child backlog.
    - Use the exact Sammy-owned dispatch target above. Do not dispatch to `agent:main:discord:channel:1498012283983364146`; cross-agent session visibility is intentionally disabled.
-2. While EJS-BDA-PRES-12 is active, check Gmail once per heartbeat for Emily's response to the BDA working-package email (`threadId: 19f9b18b92ebd4dd`; query: `from:emily.brown.ops@gmail.com subject:"BDA presentation working package" newer_than:7d`).
-   - This monitor is BDA-only. Do not monitor or reactivate Nordstrom, Tebra, or other parked application blockers.
-   - If a reply arrives, read only that thread, capture Emily's timing/voice/evidence/logistics feedback in the rehearsal checklist, and immediately continue EJS-BDA-PRES-12.
-   - If no reply exists, do not report it as a blocker. Continue any dependency-independent BDA prep; otherwise return `HEARTBEAT_OK`.
-3. Execute the next dependency-eligible BDA presentation task. Continue the critical path in backlog order as dependencies clear.
-4. For EJS-BDA-PRES-02/04, follow the shared Mode 2 research playbook. Create the brief and process log before the first new external search; keep all collection read-only.
-5. After each task, update the child backlog status/output links, presentation `PROJECT.md` current phase/next action, and parent EJS-035 Kanban card.
-6. Treat missing submission instructions as non-blocking until packaging/delivery. Do not pause research, evidence mapping, strategy, or storyboard work for them.
-7. Never use or revise the pre-research outline under `99 Archive`; the research-backed storyboard begins only after tasks 02–07 are complete.
-8. Prefer silent progress. Notify the Discord channel only for a real blocker, a decision Emily/Jaret must make, a review/rehearsal handoff, or a material completed deliverable.
-9. If the next BDA task cannot progress safely during a heartbeat, use the remaining heartbeat for current job availability: live-role revalidation, bounded discovery, shortlist hygiene, and digest readiness.
-10. When EJS-BDA-PRES-12 is complete, move EJS-035 to `Done`, remove the BDA reply monitor above, and return the Emily Job Search registry cadence from `every-heartbeat` to a manual/non-sprint cadence unless Jaret has activated new work.
+2. Do not resume presentation production, repeat deadline reminders, or monitor the old working-package Gmail thread. The final nine-slide PDF was recorded as locked and sent to the hiring manager at 11:00 a.m. PT on 2026-07-28.
+3. Check the exact BDA session only for a new Emily status update. Do not message Emily merely because the status is unchanged.
+4. If Emily provides a post-interview update, record only the confirmed facts in the rehearsal checklist, BDA role/subproject context, child backlog, and EJS-035 Kanban card. Do not infer whether the interview occurred or its outcome.
+5. If no BDA update exists, use the heartbeat for current job availability: live-role revalidation, bounded discovery, shortlist hygiene, and digest readiness.
+6. Prefer silent progress. Notify only for a meaningful role-state change, completed deliverable, blocker, or decision Emily/Jaret must make.
+7. Do not monitor or reactivate Nordstrom, Tebra, or other parked application blockers.
+8. Treat all external collection as read-only. Do not apply, contact recruiters or hiring managers, log into portals, or take public action without explicit approval.
 
 ## Application-packet pause
 
@@ -47,9 +42,10 @@ Effective 2026-07-12, Jaret paused all application-packet automation.
 
 ## Current search state
 
-- EJS-035 is the only authorized role-specific card in `Doing`.
+- EJS-035 is in `Blocked` awaiting Emily's post-interview status; no presentation-production work is authorized without new evidence.
+- There are no authorized role-specific cards in `Doing`.
 - Blocked application-tailoring cards should stay parked unless Jaret explicitly reopens one.
-- Current P0 priority is the BDA presentation critical path; job-availability monitoring is secondary until the presentation backlog is complete or temporarily unable to progress.
+- Current heartbeat work is job-availability monitoring and digest readiness unless Emily supplies a BDA update.
 
 Format rule:
 - Keep job-search updates concise, link-first, and explicit about confidence or evidence gaps.
